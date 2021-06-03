@@ -1,0 +1,21 @@
+language: cpp
+
+script:
+- cmake .
+- make
+- ./runUnitTests
+before_install:
+  - pip install --user cpp-coveralls
+
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
+      - mingw-w64
+after_success:
+  coveralls
+after_success:
+  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
