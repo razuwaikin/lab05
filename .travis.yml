@@ -1,7 +1,7 @@
 language: cpp
 
 script:
-- cmake .
+- cmake CMakeLists.txt
 - make
 - ./runUnitTests
 before_install:
