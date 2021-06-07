@@ -12,7 +12,7 @@ addons:
     sources:
       - george-edison55-precise-backports
     packages:
-      - cmake
+      - cmake 
       - cmake-data
       - mingw-w64
 after_success:
