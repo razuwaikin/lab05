@@ -83,6 +83,5 @@ TEST(Transaction, test7)
 	EXPECT_ANY_THROW(B.Make(A1, A1, 400));
 }
 int main(){
-	testing::InitGoogleTest()
 	return RUN_ALL_TESTS();
 }
