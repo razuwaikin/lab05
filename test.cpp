@@ -81,7 +81,7 @@ TEST(Transaction, test7)
 	Account A1(1, 1000);
 	EXPECT_ANY_THROW(B.Make(A1, A1, 400));
 }
-TEST(Transaction,test8){
+TEST(Transaction, test8){
 	Transaction B;
 	Account A1(1,1000);
 	EXPECT_FALSE(B.Debit(A1, 10000));
