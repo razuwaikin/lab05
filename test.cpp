@@ -84,7 +84,7 @@ TEST(Transaction, test7)
 TEST(Transaction,test8){
 	Transaction B;
 	Account A1(1,1000);
-	EXPECT_FALSE(B.Debit(A1, 10000))
+	EXPECT_FALSE(B.Debit(A1, 10000));
 }
 int main()
 {
