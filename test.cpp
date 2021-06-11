@@ -87,7 +87,7 @@ TEST(Transaction, test8)
 	Transaction B;
 	Account A1(1, 1000);
 	Account A2(2, 5000);
-	EXPECT_FALSE(B.Make(A1, A2, 4000));
+	EXPECT_FALSE(B.Make(A1, A2, 3999));
 }
 int main()
 {
