@@ -1,6 +1,5 @@
-#include "../Account.cpp"
-#include "../Transaction.cpp"
-
+#include "Account.cpp"
+#include "Transaction.cpp"
 #include "gtest/gtest.h"
 
 TEST(Account, test1)
