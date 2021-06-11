@@ -8,7 +8,6 @@ addons:
       - cmake
       - cmake-data
       - mingw-w64
-
 before_install:
   - pip install --user cpp-coveralls
 
