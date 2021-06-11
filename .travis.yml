@@ -16,6 +16,4 @@ addons:
       - cmake-data
       - mingw-w64
 after_success:
-  coveralls
-after_success:
   - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
