@@ -100,8 +100,8 @@ TEST(Transaction, test9)
 TEST(Transaction, test10)
 {
 	Transaction b;
-	account a(100,2000);
-	EXPECT_FALSE(b.Debit(a, 10000));
+	Account A1(1, 1000);
+	EXPECT_FALSE(b.Debit(A1, 10000));
 	
 }
 
