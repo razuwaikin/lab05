@@ -97,7 +97,7 @@ TEST(Transaction, test9)
 	EXPECT_EQ(A1.GetBalance(), 2000);
 	EXPECT_EQ(A2.GetBalance(), 100);
 }
-Test(Transaction, test10)
+TEST(Transaction, test10)
 {
 	Transaction b;
 	account a(100,2000);
