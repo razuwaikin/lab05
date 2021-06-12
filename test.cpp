@@ -38,7 +38,7 @@ TEST(Transaction, test1)
 TEST(Transaction, test1_1)
 {
 	Transaction B;
-	EXPECT_EQ(B.fee(), -1);
+	EXPECT_FALSE(B.fee(), -1);
 }
 TEST(Transaction, test2)
 {
