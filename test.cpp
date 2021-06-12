@@ -25,7 +25,6 @@ TEST(Account, test4)
 	A.Lock();
 	EXPECT_ANY_THROW(A.Lock());
 }
-
 TEST(Account, test5)
 {
 	Account A(1, 5);
@@ -52,6 +51,14 @@ TEST(Transaction, test3)
 	EXPECT_EQ(A1.GetBalance(), 2000);
 	EXPECT_EQ(A2.GetBalance(), 100);
 }
+//
+//
+//
+
+//
+//
+//
+
 TEST(Transaction, test4)
 {
 	Transaction B;
@@ -86,6 +93,32 @@ TEST(Transaction, test7)
 //	Account A1(1,1000);
 //	EXPECT_FALSE(B.Debit(A1, 10000));
 //}
+
+TEST(Transaction, test8)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	Account A2(2, 5000);
+	EXPECT_FALSE(B.Make(A1, A2, 4000));
+}
+//
+//
+//
+//
+//
+//
+TEST(Transaction, test9)
+{
+	Transaction B;
+	Account A1(1, 2000);
+	Account A2(2, 200);
+	B.set_fee(100);
+	B.Make(A1, A2, 400);
+	EXPECT_EQ(A1.GetBalance(), 1500);
+	EXPECT_EQ(A2.GetBalance(), 600);
+}
+
+
 int main()
 {
 	return RUN_ALL_TESTS();
