@@ -51,14 +51,6 @@ TEST(Transaction, test3)
 	EXPECT_EQ(A1.GetBalance(), 2000);
 	EXPECT_EQ(A2.GetBalance(), 100);
 }
-//
-//
-//
-
-//
-//
-//
-
 TEST(Transaction, test4)
 {
 	Transaction B;
