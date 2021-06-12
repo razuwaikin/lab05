@@ -1,55 +1,110 @@
-#include <Transaction.h>
-#include <Account.h>
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-using::testing::Return;
-using::testing::AtLeast;
-using::testing::NiceMock;
-   class MockAccount: public Account{
-public:
-   MockAccount(int id, int balance):Account(id, balance){}
-   MOCK_METHOD(int, GetBalance, (), (const, override));
-   MOCK_METHOD(void, ChangeBalance, (int diff), (override));
-   MOCK_METHOD(void, Lock, (), (override));
-   MOCK_METHOD(void, Unlock, (), (override));
-  };
+##include "Account.cpp"
+#include "Transaction.cpp"
+#include "gtest/gtest.h"
 
-  class MockTransaction: public Transaction{
-  public:
-   MOCK_METHOD(void, SaveToDataBase, (Account& from, Account& to, int sum), (override));
-  };
+TEST(Account, test1)
+{
+	Account A(1, 5);
+	EXPECT_EQ(A.GetBalance(), 5);
+}
+TEST(Account, test2)
+{
+	Account A(1, 5);
+	A.Lock();
+	A.ChangeBalance(3);
+	EXPECT_EQ(A.GetBalance(), 8);
+}
+TEST(Account, test3)
+{
+	Account A(1, 5);
+	EXPECT_ANY_THROW(A.ChangeBalance(3));
+}
+TEST(Account, test4)
+{
+	Account A(1, 5);
+	A.Lock();
+	EXPECT_ANY_THROW(A.Lock());
+}
+TEST(Account, test5)
+{
+	Account A(1, 5);
+	EXPECT_ANY_THROW(A.ChangeBalance(3));
+}
+TEST(Transaction, test1)
+{
+	Transaction B;
+	EXPECT_EQ(B.fee(), 1);
+}
+TEST(Transaction, test1_1)
+{
+	Transaction B;
+	EXPECT_EQ(B.fee(), -1);
+}
+TEST(Transaction, test2)
+{
+	Transaction B;
+	B.set_fee(5);
+	EXPECT_EQ(B.fee(), 5);
+}
+TEST(Transaction, test3)
+{
+	Transaction B;
+	Account A1(1, 2000);
+	Account A2(2, 200);
+	B.set_fee(100);
+	B.Make(A1, A2, 400);
+	EXPECT_EQ(A1.GetBalance(), 2000);
+	EXPECT_EQ(A2.GetBalance(), 100);
+}
+TEST(Transaction, test4)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	Account A2(2, 200);
+	EXPECT_ANY_THROW(B.Make(A1, A2, -400));
+	EXPECT_ANY_THROW(B.Make(A1, A2, 60));
+}
+TEST(Transaction, test5)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	Account A2(2, 200);
+	B.set_fee(300);
+	EXPECT_FALSE(B.Make(A1, A2, 400));
+}
+TEST(Transaction, test6)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	Account A2(2, 200);
+	EXPECT_ANY_THROW(B.Make(A1, A2, -400));
+}
+TEST(Transaction, test7)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	EXPECT_ANY_THROW(B.Make(A1, A1, 400));
+}
+TEST(Transaction, test8)
+{
+	Transaction B;
+	Account A1(1, 1000);
+	Account A2(2, 5000);
+	EXPECT_TRUE(B.Make(A1, A2, 3999));
+}
+TEST(Transaction, test9)
+{
+	Transaction B;
+	Account A1(1, 2000);
+	Account A2(2, 200);
+	B.set_fee(100);
+	B.Make(A1, A2, 400);
+	EXPECT_EQ(A1.GetBalance(), 2000);
+	EXPECT_EQ(A2.GetBalance(), 100);
+}
 
-  TEST(Account, GetBalance){
-   NiceMock<MockAccount> acc(1,100);
-   EXPECT_EQ(acc.Account::GetBalance(), 100);
-  }
 
-  TEST(Account, ChangeBalance){
-   NiceMock<MockAccount> acc(0, 100);
-   EXPECT_THROW(acc.Account::ChangeBalance(50), std::runtime_error);
-   acc.Account::Lock();
-   acc.Account::ChangeBalance(50);
-   EXPECT_EQ(acc.Account::GetBalance(), 150);
-
-  }
-
-  TEST(Account, Lock){
-   NiceMock<MockAccount> acc(0, 100);
-   acc.Account::Lock();
-   EXPECT_THROW(acc.Account::Lock(), std::runtime_error);
-  }
-
-  TEST(Account, Unlock){
-   NiceMock<MockAccount> acc(0, 100);
-   EXPECT_CALL(acc, Unlock()).Times(1);
-   acc.Unlock();
-  }
-
-  TEST(Transaction, SaveToDataBase){
-   NiceMock<MockAccount> f_acc(0, 200);
-   NiceMock<MockAccount> t_acc(1, 300);
-   MockTransaction tr;
-   // EXPECT_CALL(tr, SaveToDataBase(f_acc, t_acc, 150)).Times(1);
-   tr.SaveToDataBase(f_acc, t_acc, 150);
-  }
-
+int main()
+{
+	return RUN_ALL_TESTS();
+}
