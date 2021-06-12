@@ -97,6 +97,12 @@ TEST(Transaction, test9)
 	EXPECT_EQ(A1.GetBalance(), 2000);
 	EXPECT_EQ(A2.GetBalance(), 100);
 }
+Test(Transaction, test10){
+	Transaction b;
+	account a(100,2000);
+	EXPECT_FALSE(b.Debit(a, 10000));
+	
+}
 
 
 int main()
